@@ -1,0 +1,21 @@
+{
+  "name": "Sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "mocha"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@brightside/core": "^1.0.1",
+    "mocha": "^5.2.0",
+    "node-cmd": "^3.0.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
