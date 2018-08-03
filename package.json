@@ -8,7 +8,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@brightside/core": "^1.0.1",
     "mocha": "^5.2.0",
     "node-cmd": "^3.0.0"
   },
