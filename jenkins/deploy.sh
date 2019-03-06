@@ -6,17 +6,17 @@ set +x
 
 echo 'jenkins: deploy'
 #echo " zosmf check status"
-zowe zosmf check status --zosmf-profile tx9 -H 9.212.128.238 -P 9143 -u $userid --pw $password --ru false 
+#zowe zosmf check status --zosmf-profile tx9 -H 9.212.128.238 -P 9143 -u $userid --pw $password --ru false 
 
 # set -x
 # zowe files download ds "PRICHAR.SAMPLE.LOAD(HELLOWRD)" -f bin -b
 echo 'zowe files list ds "PRICHAR.ZOWE.TEST.LOAD" | grep -q "PRICHAR.ZOWE.TEST.LOAD"'
-if zowe files list ds "PRICHAR.ZOWE.TEST.LOAD" | grep -q "PRICHAR.ZOWE.TEST.LOAD"; then
+if zowe files list ds "PRICHAR.ZOWE.TEST.LOAD -u $userid --pw $password --ru false" | grep -q "PRICHAR.ZOWE.TEST.LOAD"; then
     echo "PRICHAR.ZOWE.TEST.LOAD already exists"
 else
     echo "PRICHAR.ZOWE.TEST.LOAD does not exist. Create it."
     echo 'zowe files create bin "PRICHAR.ZOWE.TEST.LOAD"'
-    zowe files create bin "PRICHAR.ZOWE.TEST.LOAD"
+    zowe files create bin "PRICHAR.ZOWE.TEST.LOAD" -u $userid --pw $password --ru false
 fi
 
 # zowe files upload ftds bin "PRICHAR.ZOWE.TEST.LOAD(HELLOWRD)" -b
@@ -26,12 +26,12 @@ function submitJCL () {
     ds=$1
 
     echo 'zowe jobs submit data-set "' $ds '--rff jobid --rft string"'
-    jobid=`zowe jobs submit data-set $ds --rff jobid --rft string`
+    jobid=`zowe jobs submit data-set $ds --rff jobid --rft string -u $userid --pw $password --ru false`
     echo $jobid
     echo ''
 
     echo 'zowe jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
-    retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string`
+    retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string -u $userid --pw $password --ru false`
     echo $retcode
     echo ''
     
@@ -41,7 +41,7 @@ function submitJCL () {
         sleep $wait
         
         echo 'zowe jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
-        retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string`
+        retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string -u $userid --pw $password --ru false`
         echo $retcode
         echo ''
     done
@@ -60,4 +60,4 @@ function submitJCL () {
     fi
 }
 
-submitJCL "PRICHAR.ZOWE.JCL(IEBCOPY)"
+submitJCL "'PRICHAR.ZOWE.JCL(IEBCOPY)'"
