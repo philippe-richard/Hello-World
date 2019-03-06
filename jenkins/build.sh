@@ -17,7 +17,7 @@ function submitJCL () {
     ds=$1
 	echo 'dataset submitted is:' $ds
     echo 'zowe jobs submit data-set "'$ds'" --rff jobid --rft string'
-    jobid=`zowe jobs submit data-set $ds --rff jobid --rft string  --zosmf-p tx9`
+    jobid=`zowe jobs submit data-set $ds --rff jobid --rft string  -u $userid --pw $password --ru false`
     echo $jobid
     echo ''
 
