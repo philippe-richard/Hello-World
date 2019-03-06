@@ -11,7 +11,7 @@ echo 'jenkins: deploy'
 # set -x
 # zowe files download ds "PRICHAR.SAMPLE.LOAD(HELLOWRD)" -f bin -b
 echo 'zowe files list ds "PRICHAR.ZOWE.TEST.LOAD" | grep -q "PRICHAR.ZOWE.TEST.LOAD"'
-if zowe files list ds "PRICHAR.ZOWE.TEST.LOAD" -u $userid --pw $password --ru false" | grep -q "PRICHAR.ZOWE.TEST.LOAD"; then
+if zowe files list ds "PRICHAR.ZOWE.TEST.LOAD" -u $userid --pw $password --ru false | grep -q "PRICHAR.ZOWE.TEST.LOAD"; then
     echo "PRICHAR.ZOWE.TEST.LOAD already exists"
 else
     echo "PRICHAR.ZOWE.TEST.LOAD does not exist. Create it."
