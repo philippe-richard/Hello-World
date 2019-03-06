@@ -58,7 +58,7 @@ describe('Hello World', function () {
             cmd.get(
               'zowe jobs view sfbi ' + data + ' 101 -u $userid --pw $password --ru false',
               function (err, data, stderr) {
-                assert.equal(data.trim(), "HELLO WORLD!");
+                assert.equal(data.trim(), " HELLO WORLD!");
                 done();
               }
             );
