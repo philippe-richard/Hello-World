@@ -5,7 +5,7 @@ set +x
 # echo 'jenkins' | gnome-keyring-daemon --unlock
 
 #echo " zosmf check status"
-zowe zosmf check status --zosmf-profile tx9 -H 9.212.128.238 -P 9143 -u $userid --pw $password --ru false 
+#zowe zosmf check status --zosmf-profile tx9 -H 9.212.128.238 -P 9143 -u $userid --pw $password --ru false 
 echo 'jenkins: build'
 # Will still print ****, which is cool.
 echo 'userid:' $userid 'password:' $password
@@ -17,7 +17,7 @@ function submitJCL () {
     ds=$1
 	echo 'dataset submitted is:' $ds
     echo 'zowe jobs submit data-set "'$ds'" --rff jobid --rft string'
-    jobid=`zowe jobs submit data-set $ds --rff jobid --rft string`
+    jobid=`zowe jobs submit data-set $ds --rff jobid --rft string  --zosmf-p tx9`
     echo $jobid
     echo ''
 
