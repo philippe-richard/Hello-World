@@ -1,8 +1,5 @@
 pipeline {
-    agent any
-	environment {
-                CREDENTIALS = credentials('zowe-credentials')
-					}
+    agent { label 'ca-brightside-agent' }
     stages {
         stage('build') {
             environment {
@@ -11,12 +8,12 @@ pipeline {
             }
             steps {
                 sh 'npm --version'
-                sh 'zowe --version'
+                sh 'bright --version'
                 sh 'npm install'
-                withCredentials([usernamePassword(credentialsId: 'zowe-credentials', usernameVariable: 'userid', passwordVariable: 'password')]) {
-                    sh "chmod +x $CREATE_PROFILE && $CREATE_PROFILE"
+                withCredentials([usernamePassword(credentialsId: 'brightProfCreds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'), string(credentialsId: 'host', variable: 'HOST'), string(credentialsId: 'port', variable: 'PORT')]) {
+                    sh "chmod +x $CREATE_PROFILE && dbus-launch $CREATE_PROFILE"
                 }
-                sh "chmod +x $BUILD_COBOL && $BUILD_COBOL"
+                sh "chmod +x $BUILD_COBOL && dbus-launch $BUILD_COBOL"
             }
         }
         stage('deploy') {
@@ -24,7 +21,7 @@ pipeline {
                 DEPLOY_SCRIPT = "./jenkins/deploy.sh"
             }
             steps {
-                sh "chmod +x $DEPLOY_SCRIPT && $DEPLOY_SCRIPT"
+                sh "chmod +x $DEPLOY_SCRIPT && dbus-launch $DEPLOY_SCRIPT"
             }
         }
         stage('test') {
@@ -32,7 +29,7 @@ pipeline {
                 TEST_SCRIPT = "./jenkins/test.sh"
             }
             steps {
-                sh "chmod +x $TEST_SCRIPT && $TEST_SCRIPT"
+                sh "chmod +x $TEST_SCRIPT && dbus-launch $TEST_SCRIPT"
             }
         }
     }

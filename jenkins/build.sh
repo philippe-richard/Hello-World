@@ -1,8 +1,13 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set +x
 
 # Unlock the keyring
-echo 'jenkins' | gnome-keyring-daemon --unlock
+# echo 'jenkins' | gnome-keyring-daemon --unlock
+
+echo 'jenkins: build'
+# Will still print ****, which is cool.
+echo 'userid:' $userid 'password:' $password
+
 
 tries=20
 wait=5
@@ -44,4 +49,4 @@ function submitJCL () {
     fi
 }
 
-submitJCL "SHARC16.BRIGHT.JCL(COBOL)"
+submitJCL "PRICHAR.ZOWE.JCL(HELLOCMP)"

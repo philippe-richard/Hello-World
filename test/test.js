@@ -20,7 +20,7 @@ async function awaitJobCompletion(jobId, tries = 10, wait = 2000) {
   if (tries > 0) {
     sleep(wait);
     cmd.get(
-      'bright jobs view job-status-by-jobid ' + jobId + ' --rff retcode --rft string',
+      'zowe jobs view job-status-by-jobid ' + jobId + ' --rff retcode --rft string',
       function (err, data, stderr) {
         retcode = data;
         if (retcode == "CC 0000") {
@@ -45,7 +45,7 @@ describe('Hello World', function () {
     it('should return Hello World upon job completion', function (done) {
       // Submit job, await completion
       cmd.get(
-        'bright jobs submit data-set "SHARC16.BRIGHT.JCL(CBLTEST)" --rff jobid --rft string',
+        'zowe jobs submit data-set "PRICHAR.ZOWE.JCL(HELLOJOB)" --rff jobid --rft string',
         function (err, data, stderr) {
           // Strip unwanted whitespace/newline
           data = data.trim();
@@ -56,9 +56,9 @@ describe('Hello World', function () {
 
             // Verify the output
             cmd.get(
-              'bright jobs view sfbi ' + data + ' 103',
+              'zowe jobs view sfbi ' + data + ' 101',
               function (err, data, stderr) {
-                assert.equal(data.trim(), "Hello, World!");
+                assert.equal(data.trim(), "HELLO WORLD!");
                 done();
               }
             );

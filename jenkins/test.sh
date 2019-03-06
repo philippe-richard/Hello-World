@@ -2,6 +2,6 @@
 set +x
 
 # Unlock the keyring
-echo 'jenkins' | gnome-keyring-daemon --unlock
+# echo 'jenkins' | gnome-keyring-daemon --unlock
 
 npm test

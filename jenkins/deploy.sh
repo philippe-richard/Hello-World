@@ -1,33 +1,35 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set +x
 
 # Unlock the keyring
-echo 'jenkins' | gnome-keyring-daemon --unlock
+# echo 'jenkins' | gnome-keyring-daemon --unlock
+
+echo 'jenkins: deploy'
 
 # set -x
-# bright files download ds "SHARC16.BRIGHT.CBL.LOADLIB(HELLO)" -f bin -b
-echo 'bright files list ds "SHARC16.BRIGHT.TEST.LOADLIB" | grep -q "SHARC16.BRIGHT.TEST.LOADLIB"'
-if bright files list ds "SHARC16.BRIGHT.TEST.LOADLIB" | grep -q "SHARC16.BRIGHT.TEST.LOADLIB"; then
-    echo "SHARC16.BRIGHT.TEST.LOADLIB already exists"
+# zowe files download ds "PRICHAR.SAMPLE.LOAD(HELLOWRD)" -f bin -b
+echo 'zowe files list ds "PRICHAR.ZOWE.TEST.LOAD" | grep -q "PRICHAR.ZOWE.TEST.LOAD"'
+if zowe files list ds "PRICHAR.ZOWE.TEST.LOAD" | grep -q "PRICHAR.ZOWE.TEST.LOAD"; then
+    echo "PRICHAR.ZOWE.TEST.LOAD already exists"
 else
-    echo "SHARC16.BRIGHT.TEST.LOADLIB does not exist. Create it."
-    echo 'bright files create bin "SHARC16.BRIGHT.TEST.LOADLIB"'
-    bright files create bin "SHARC16.BRIGHT.TEST.LOADLIB"
+    echo "PRICHAR.ZOWE.TEST.LOAD does not exist. Create it."
+    echo 'zowe files create bin "PRICHAR.ZOWE.TEST.LOAD"'
+    zowe files create bin "PRICHAR.ZOWE.TEST.LOAD"
 fi
 
-# bright files upload ftds bin "SHARC16.BRIGHT.TEST.LOADLIB(HELLO)" -b
+# zowe files upload ftds bin "PRICHAR.ZOWE.TEST.LOAD(HELLOWRD)" -b
 tries=20
 wait=2
 function submitJCL () {
     ds=$1
 
-    echo 'bright jobs submit data-set "' $ds '--rff jobid --rft string"'
-    jobid=`bright jobs submit data-set $ds --rff jobid --rft string`
+    echo 'zowe jobs submit data-set "' $ds '--rff jobid --rft string"'
+    jobid=`zowe jobs submit data-set $ds --rff jobid --rft string`
     echo $jobid
     echo ''
 
-    echo 'bright jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
-    retcode=`bright jobs view job-status-by-jobid $jobid --rff retcode --rft string`
+    echo 'zowe jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
+    retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string`
     echo $retcode
     echo ''
     
@@ -36,8 +38,8 @@ function submitJCL () {
         ((counter++))
         sleep $wait
         
-        echo 'bright jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
-        retcode=`bright jobs view job-status-by-jobid $jobid --rff retcode --rft string`
+        echo 'zowe jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
+        retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string`
         echo $retcode
         echo ''
     done
@@ -56,4 +58,4 @@ function submitJCL () {
     fi
 }
 
-submitJCL "SHARC16.BRIGHT.JCL(IEBCOPY)"
+submitJCL "PRICHAR.ZOWE.JCL(IEBCOPY)"
