@@ -15,9 +15,9 @@ tries=20
 wait=5
 function submitJCL () {
     ds=$1
-
+	echo 'dataset submitted is:' $ds
     echo 'zowe jobs submit data-set "'$ds'" --rff jobid --rft string'
-    jobid=`zowe jobs submit data-set "`$ds`" --rff jobid --rft string`
+    jobid=`zowe jobs submit data-set $ds --rff jobid --rft string`
     echo $jobid
     echo ''
 
