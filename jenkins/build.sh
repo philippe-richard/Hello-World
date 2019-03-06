@@ -14,13 +14,13 @@ wait=5
 function submitJCL () {
     ds=$1
 
-    echo 'bright jobs submit data-set "' $ds '--rff jobid --rft string"'
-    jobid=`bright jobs submit data-set $ds --rff jobid --rft string`
+    echo 'zowe jobs submit data-set "' $ds '--rff jobid --rft string"'
+    jobid=`zowe jobs submit data-set $ds --rff jobid --rft string`
     echo $jobid
     echo ''
 
-    echo 'bright jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
-    retcode=`bright jobs view job-status-by-jobid $jobid --rff retcode --rft string`
+    echo 'zowe jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
+    retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string`
     echo $retcode
     echo ''
     
@@ -29,8 +29,8 @@ function submitJCL () {
         ((counter++))
         sleep $wait
         
-        echo 'bright jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
-        retcode=`bright jobs view job-status-by-jobid $jobid --rff retcode --rft string`
+        echo 'zowe jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
+        retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string`
         echo $retcode
         echo ''
     done
