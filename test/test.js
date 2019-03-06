@@ -56,7 +56,7 @@ describe('Hello World', function () {
 
             // Verify the output
             cmd.get(
-              'zowe jobs view sfbi ' + data + ' 101',
+              'zowe jobs view sfbi ' + data + ' 101 -u $userid --pw $password --ru false',
               function (err, data, stderr) {
                 assert.equal(data.trim(), "HELLO WORLD!");
                 done();
