@@ -5,6 +5,8 @@ set +x
 # echo 'jenkins' | gnome-keyring-daemon --unlock
 
 echo 'jenkins: deploy'
+#echo " zosmf check status"
+zowe zosmf check status --zosmf-profile tx9 -H 9.212.128.238 -P 9143 -u $userid --pw $password --ru false 
 
 # set -x
 # zowe files download ds "PRICHAR.SAMPLE.LOAD(HELLOWRD)" -f bin -b

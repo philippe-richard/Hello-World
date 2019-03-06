@@ -4,6 +4,8 @@ set +x
 # Unlock the keyring
 # echo 'jenkins' | gnome-keyring-daemon --unlock
 
+#echo " zosmf check status"
+zowe zosmf check status --zosmf-profile tx9 -H 9.212.128.238 -P 9143 -u $userid --pw $password --ru false 
 echo 'jenkins: build'
 # Will still print ****, which is cool.
 echo 'userid:' $userid 'password:' $password
