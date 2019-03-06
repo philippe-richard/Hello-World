@@ -51,4 +51,4 @@ function submitJCL () {
     fi
 }
 
-submitJCL "PRICHAR.ZOWE.JCL(HELLOCMP)"
+submitJCL "'PRICHAR.ZOWE.JCL(HELLOCMP)'"
