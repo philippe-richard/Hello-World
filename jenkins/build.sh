@@ -22,7 +22,7 @@ function submitJCL () {
     echo ''
 
     echo 'zowe jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
-    retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string`
+    retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string -u $userid --pw $password --ru false`
     echo $retcode
     echo ''
     
@@ -32,7 +32,7 @@ function submitJCL () {
         sleep $wait
         
         echo 'zowe jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
-        retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string`
+        retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string -u $userid --pw $password --ru false`
         echo $retcode
         echo ''
     done
