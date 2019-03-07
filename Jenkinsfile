@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'zowe-agent' }
 	environment {
                 CREDENTIALS = credentials('zowe-credentials')
 					}

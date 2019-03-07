@@ -6,4 +6,4 @@ set +x
 echo 'jenkins: test'
 echo 'userid:' $userid
 echo 'password:' $password 
-npm test $userid $password
+npm test 
