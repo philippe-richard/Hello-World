@@ -20,7 +20,7 @@ async function awaitJobCompletion(jobId, tries = 10, wait = 2000) {
   if (tries > 0) {
     sleep(wait);
     cmd.get(
-      'zowe jobs view job-status-by-jobid ' + jobId + ' --rff retcode --rft string -u $userid --pw $password --ru false',
+      'zowe jobs view job-status-by-jobid ' + jobId + ' --rff retcode --rft string -u prichar --pw s99arlat --ru false',
       function (err, data, stderr) {
         retcode = data;
         if (retcode == "CC 0000") {
@@ -45,7 +45,7 @@ describe('Hello World', function () {
     it('should return Hello World upon job completion', function (done) {
       // Submit job, await completion
       cmd.get(
-        'zowe jobs submit data-set "PRICHAR.ZOWE.JCL(HELLOJOB)" --rff jobid --rft string -u $userid --pw $password --ru false',
+        'zowe jobs submit data-set "PRICHAR.ZOWE.JCL(HELLOJOB)" --rff jobid --rft string -u prichar --pw s99arlat --ru false',
         function (err, data, stderr) {
           // Strip unwanted whitespace/newline
           data = data.trim();
@@ -56,7 +56,7 @@ describe('Hello World', function () {
 
             // Verify the output
             cmd.get(
-              'zowe jobs view sfbi ' + data + ' 101 -u $userid --pw $password --ru false',
+              'zowe jobs view sfbi ' + data + ' 101 -u prichar --pw s99arlat --ru false',
               function (err, data, stderr) {
                 assert.equal(data.trim(), " HELLO WORLD!");
                 done();
