@@ -2,8 +2,10 @@ var assert = require('assert');
 var cmd = require('node-cmd');
 var program_name = process.argv[0]; //value will be "node"
 var script_path = process.argv[1]; //value will be "yourscript.js"
-var userid = process.argv[2]; //value will be "banana"
-var password = process.argv[3]; //value will be "monkey"  
+/* #var userid = process.argv[2]; //value will be "banana"
+var password = process.argv[3]; //value will be "monkey"  */
+var userid = process.env.USERID; //value will be "banana"
+var password = process.env.PASSWORD; //value will be "monkey"
 console.log("userid=" + userid + " password=" + password)
 /**
  * Sleep function.
