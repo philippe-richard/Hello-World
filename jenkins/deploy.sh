@@ -2,7 +2,7 @@
 set +x
 
 # Unlock the keyring
-# echo 'jenkins' | gnome-keyring-daemon --unlock
+ echo 'jenkins: step deploy' 
 
 echo 'jenkins: deploy'
 #echo " zosmf check status"
@@ -16,7 +16,7 @@ if zowe files list ds "PRICHAR.ZOWE.TEST.LOAD" --ru false | grep -q "PRICHAR.ZOW
 else
     echo "PRICHAR.ZOWE.TEST.LOAD does not exist. Create it."
     echo 'zowe files create bin "PRICHAR.ZOWE.TEST.LOAD"'
-    zowe files create bin "PRICHAR.ZOWE.TEST.LOAD" -u $userid --pw $password --ru false
+    zowe files create bin "PRICHAR.ZOWE.TEST.LOAD" 
 fi
 
 # zowe files upload ftds bin "PRICHAR.ZOWE.TEST.LOAD(HELLOWRD)" -b
@@ -26,12 +26,12 @@ function submitJCL () {
     ds=$1
 
     echo 'zowe jobs submit data-set "' $ds '--rff jobid --rft string"'
-    jobid=`zowe jobs submit data-set $ds --rff jobid --rft string -u $userid --pw $password --ru false`
+    jobid=`zowe jobs submit data-set $ds --rff jobid --rft string`
     echo $jobid
     echo ''
 
     echo 'zowe jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
-    retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string -u $userid --pw $password --ru false`
+    retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string`
     echo $retcode
     echo ''
     
@@ -41,7 +41,7 @@ function submitJCL () {
         sleep $wait
         
         echo 'zowe jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
-        retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string -u $userid --pw $password --ru false`
+        retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string`
         echo $retcode
         echo ''
     done
