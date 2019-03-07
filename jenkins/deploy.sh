@@ -16,22 +16,22 @@ if zowe files list ds "PRICHAR.ZOWE.TEST.LOAD" --ru false | grep -q "PRICHAR.ZOW
 else
     echo "PRICHAR.ZOWE.TEST.LOAD does not exist. Create it."
     echo 'zowe files create bin "PRICHAR.ZOWE.TEST.LOAD"'
-    zowe files create bin "PRICHAR.ZOWE.TEST.LOAD" 
+    zowe files create bin "PRICHAR.ZOWE.TEST.LOAD" -u $userid --pw $password --ru false 
 fi
 
-# zowe files upload ftds bin "PRICHAR.ZOWE.TEST.LOAD(HELLOWRD)" -b
+# zowe files upload ftds bin "PRICHAR.ZOWE.TEST.LOAD(HELLOWRD)" -b -u $userid --pw $password --ru false 
 tries=20
 wait=2
 function submitJCL () {
     ds=$1
 
     echo 'zowe jobs submit data-set "' $ds '--rff jobid --rft string"'
-    jobid=`zowe jobs submit data-set $ds --rff jobid --rft string`
+    jobid=`zowe jobs submit data-set $ds --rff jobid --rft string -u $userid --pw $password --ru false `
     echo $jobid
     echo ''
 
     echo 'zowe jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
-    retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string`
+    retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string -u $userid --pw $password --ru false `
     echo $retcode
     echo ''
     
@@ -41,7 +41,7 @@ function submitJCL () {
         sleep $wait
         
         echo 'zowe jobs view job-status-by-jobid' $jobid '--rff retcode --rft string'
-        retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string`
+        retcode=`zowe jobs view job-status-by-jobid $jobid --rff retcode --rft string -u $userid --pw $password --ru false `
         echo $retcode
         echo ''
     done
